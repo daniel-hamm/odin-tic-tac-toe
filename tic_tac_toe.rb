@@ -34,6 +34,12 @@ class Game
     end
   end
 
+  def display_points
+    @players.keys.count.times do |n|
+      print "#{@players[n][:name]} has #{@players[n][:value]} points.\n"
+    end
+  end
+
   def add_point(players_hash_id)
     @players[players_hash_id][:value] += 1
   end
@@ -88,18 +94,24 @@ class Game
     [false]
   end
 
+  def who_won(string)
+    @players.keys.count.times do |n|
+      if @players[n][:marker] == string
+        print "#{@players[n][:name]} won.\n"
+        add_point(n)
+      end
+    end
+  end
+
   def check_grid
     if    self.check_rows[0]
-      # search for the player who won
-      # print the name of the player
-      # add points to the player
-      print ""
+      who_won(self.check_rows[1])
       true
     elsif self.check_columns[0]
-      print ""
+      who_won(self.check_columns[1])
       true
     elsif self.check_vertically[0]
-      print ""
+      who_won(self.check_vertically[1])
       true
     else
       false
@@ -132,10 +144,12 @@ puts game.players
 
 game.display_grid
 
-game.set_marker(0, 0)
-game.set_marker(0, 1)
-game.set_marker(0, 2)
+game.set_marker(1, 0)
+game.set_marker(1, 1)
+game.set_marker(1, 2)
 
 game.display_grid
 
-puts game.check_grid
+game.check_grid
+
+game.display_points
