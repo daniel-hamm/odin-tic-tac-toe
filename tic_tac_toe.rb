@@ -12,10 +12,13 @@ class Game
   end
 
   def display_grid
+    print "\n"
     @grid.each_with_index do |value, index|
-      print "#{value}\t"
-      print "\n" if index == 2 || index == 5
+      print @grid[index][:marker].to_s
+      print " | " if index == 0 || index == 1 || index == 3 || index == 4 || index == 6 || index == 7
+      print "\n--+---+--\n" if index == 2 || index == 5
     end
+    print "\n\n"
   end
 
   def add_point
@@ -36,7 +39,7 @@ class Game
     9.times do |i|
       @grid[i] = {
         player: '',
-        marker: ''
+        marker: i.to_s
       }
     end
   end
@@ -58,6 +61,6 @@ game = Game.new
 player1 = Player.new('Robert', 0)
 player2 = Player.new('Junior', 0)
 
-puts player1.display_results
+# puts player1.display_results
 
 game.display_grid
