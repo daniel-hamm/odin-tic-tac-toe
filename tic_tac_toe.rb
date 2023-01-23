@@ -44,7 +44,7 @@ class Game
     end
   end
 
-  def check_grid
+  def check_rows
     # set the loop counter to 0
     i = 0
 
@@ -55,6 +55,11 @@ class Game
       i += 3
     end
 
+    # return false if nothing is true
+    false
+  end
+
+  def check_columns
     # set the loop counter to 3
     i = 3
 
@@ -63,6 +68,10 @@ class Game
       return true if @grid[n][:marker] == @grid[n + i][:marker] && @grid[n][:marker] == @grid[n + i + i][:marker]
     end
 
+    false
+  end
+
+  def check_vertically
     # check vertically
     return true if @grid[0][:marker] == @grid[4][:marker] && @grid[0][:marker] == @grid[8][:marker]
 
@@ -70,6 +79,14 @@ class Game
 
     # return false if nothing of the above is true
     false
+  end
+
+  def check_grid
+    if check_rows || check_columns || check_vertically
+      true
+    else
+      false
+    end
   end
 
   private
@@ -98,8 +115,8 @@ puts game.players
 
 game.display_grid
 
-game.set_marker(0, 2)
-game.set_marker(0, 4)
+game.set_marker(0, 0)
+game.set_marker(0, 3)
 game.set_marker(0, 6)
 
 game.display_grid
