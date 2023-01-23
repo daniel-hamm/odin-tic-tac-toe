@@ -63,6 +63,12 @@ class Game
       return true if @grid[n][:marker] == @grid[n + i][:marker] && @grid[n][:marker] == @grid[n + i + i][:marker]
     end
 
+    # check vertically
+    return true if @grid[0][:marker] == @grid[4][:marker] && @grid[0][:marker] == @grid[8][:marker]
+
+    return true if @grid[2][:marker] == @grid[4][:marker] && @grid[2][:marker] == @grid[6][:marker]
+
+    # return false if nothing of the above is true
     false
   end
 
@@ -93,8 +99,8 @@ puts game.players
 game.display_grid
 
 game.set_marker(0, 2)
-game.set_marker(0, 5)
-game.set_marker(0, 8)
+game.set_marker(0, 4)
+game.set_marker(0, 6)
 
 game.display_grid
 
