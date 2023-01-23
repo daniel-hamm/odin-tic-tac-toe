@@ -50,13 +50,15 @@ class Game
 
     # check the rows
     3.times do
-      return true if @grid[i][:marker] == @grid[i + 1][:marker] && @grid[i][:marker] == @grid[i + 2][:marker]
+      if @grid[i][:marker] == @grid[i + 1][:marker] && @grid[i][:marker] == @grid[i + 2][:marker]
+        return [true, @grid[i][:marker]]
+      end
 
       i += 3
     end
 
-    # return false if nothing is true
-    false
+    # return false as array if nothing is true
+    [false]
   end
 
   def check_columns
@@ -65,24 +67,39 @@ class Game
 
     # check the columns
     3.times do |n|
-      return true if @grid[n][:marker] == @grid[n + i][:marker] && @grid[n][:marker] == @grid[n + i + i][:marker]
+      if @grid[n][:marker] == @grid[n + i][:marker] && @grid[n][:marker] == @grid[n + i + i][:marker]
+        return [true, @grid[n][:marker]]
+      end
     end
 
-    false
+    # return false as array if nothing is true
+    [false]
   end
 
   def check_vertically
     # check vertically
-    return true if @grid[0][:marker] == @grid[4][:marker] && @grid[0][:marker] == @grid[8][:marker]
+    if    @grid[0][:marker] == @grid[4][:marker] && @grid[0][:marker] == @grid[8][:marker]
+      return [true, @grid[0][:marker]]
+    elsif @grid[2][:marker] == @grid[4][:marker] && @grid[2][:marker] == @grid[6][:marker]
+      return [true, @grid[2][:marker]]
+    end
 
-    return true if @grid[2][:marker] == @grid[4][:marker] && @grid[2][:marker] == @grid[6][:marker]
-
-    # return false if nothing of the above is true
-    false
+    # return false as array if nothing is true
+    [false]
   end
 
   def check_grid
-    if check_rows || check_columns || check_vertically
+    if    self.check_rows[0]
+      # search for the player who won
+      # print the name of the player
+      # add points to the player
+      print ""
+      true
+    elsif self.check_columns[0]
+      print ""
+      true
+    elsif self.check_vertically[0]
+      print ""
       true
     else
       false
@@ -116,8 +133,8 @@ puts game.players
 game.display_grid
 
 game.set_marker(0, 0)
-game.set_marker(0, 3)
-game.set_marker(0, 6)
+game.set_marker(0, 1)
+game.set_marker(0, 2)
 
 game.display_grid
 
