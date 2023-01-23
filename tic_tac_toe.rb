@@ -2,7 +2,10 @@
 
 # Main game class
 class Game
-  def initialize
+  attr_reader :players
+
+  def initialize(name0, name1)
+    @players = { 0 => { name: name0, value: 0, marker: 'X' }, 1 => { name: name1, value: 0, marker: 'O' } }
     @grid = {}
     self.new_game
   end
@@ -21,16 +24,18 @@ class Game
     print "\n\n"
   end
 
-  def add_point
-    @points += 1
+  def set_marker(players_hash_id, grid_position)
+    @grid[grid_position][:marker] = @players[players_hash_id][:marker]
+  end
+
+  def add_point(players_hash_id)
+    @players[players_hash_id][:value] += 1
   end
 
   def reset_points
-    @points = 0
-  end
-
-  def display_results
-    "#{@name} has #{@points} points."
+    @players.each_with_index do |value, index|
+      @players[index][:value] = 0
+    end
   end
 
   private
@@ -45,22 +50,20 @@ class Game
   end
 end
 
-# Player class
-class Player < Game
-  attr_reader :name, :points
+game = Game.new("Robert", "Junior")
 
-  def initialize(name, points = 0)
-    # super
-    @name = name
-    @points = points
-  end
-end
+puts game.players
 
-game = Game.new
+game.add_point(0)
 
-player1 = Player.new('Robert', 0)
-player2 = Player.new('Junior', 0)
+puts game.players
 
-# puts player1.display_results
+game.reset_points
+
+puts game.players
+
+game.display_grid
+
+game.set_marker(0, 1)
 
 game.display_grid
