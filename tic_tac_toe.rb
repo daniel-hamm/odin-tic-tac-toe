@@ -25,7 +25,13 @@ class Game
   end
 
   def set_marker(players_hash_id, grid_position)
-    @grid[grid_position][:marker] = @players[players_hash_id][:marker]
+    if @grid[grid_position][:marker].class != Integer
+      puts "Position already occupied by player #{@grid[grid_position][:player]}!"
+      false
+    else
+      @grid[grid_position][:player] = @players[players_hash_id][:name]
+      @grid[grid_position][:marker] = @players[players_hash_id][:marker]
+    end
   end
 
   def add_point(players_hash_id)
@@ -38,13 +44,35 @@ class Game
     end
   end
 
+  def check_grid
+    # set the loop counter to 0
+    i = 0
+
+    # check the rows
+    3.times do
+      return true if @grid[i][:marker] == @grid[i + 1][:marker] && @grid[i][:marker] == @grid[i + 2][:marker]
+
+      i += 3
+    end
+
+    # set the loop counter to 3
+    i = 3
+
+    # check the columns
+    3.times do |n|
+      return true if @grid[n][:marker] == @grid[n + i][:marker] && @grid[n][:marker] == @grid[n + i + i][:marker]
+    end
+
+    false
+  end
+
   private
 
   def create_grid
     9.times do |i|
       @grid[i] = {
         player: '',
-        marker: i.to_s
+        marker: i
       }
     end
   end
@@ -64,6 +92,10 @@ puts game.players
 
 game.display_grid
 
-game.set_marker(0, 1)
+game.set_marker(0, 2)
+game.set_marker(0, 5)
+game.set_marker(0, 8)
 
 game.display_grid
+
+puts game.check_grid
