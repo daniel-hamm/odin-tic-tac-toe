@@ -128,7 +128,9 @@ class Game
   def who_won(string)
     @players.keys.count.times do |n|
       if @players[n][:marker] == string
+        print "##################\n"
         print "#{@players[n][:name]} won.\n"
+        print "##################\n"
         add_point(n)
       end
     end
@@ -138,7 +140,13 @@ end
 run = true
 current_player = 0
 
-game = Game.new('Robert', 'Junior')
+print "\nWelcome to Tic Tac Toe!\n\nEnter the first players name: "
+name1 = gets.chomp
+print "\nEnter the second players name: "
+name2 = gets.chomp
+print "\nStarting the game!\n"
+
+game = Game.new(name1, name2)
 
 while run
   game.display_grid
@@ -154,6 +162,7 @@ while run
   end
 
   if game.check_grid
+    game.display_grid
     print "\n"
     print game.display_points
     print "\n"
