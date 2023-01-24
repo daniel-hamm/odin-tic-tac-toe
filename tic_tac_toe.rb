@@ -40,6 +40,23 @@ class Game
     end
   end
 
+  def check_grid
+    if    self.check_rows[0]
+      who_won(self.check_rows[1])
+      true
+    elsif self.check_columns[0]
+      who_won(self.check_columns[1])
+      true
+    elsif self.check_vertically[0]
+      who_won(self.check_vertically[1])
+      true
+    else
+      false
+    end
+  end
+
+  private
+
   def add_point(players_hash_id)
     @players[players_hash_id][:value] += 1
   end
@@ -47,6 +64,15 @@ class Game
   def reset_points
     @players.each_with_index do |value, index|
       @players[index][:value] = 0
+    end
+  end
+
+  def create_grid
+    9.times do |i|
+      @grid[i] = {
+        player: '',
+        marker: i
+      }
     end
   end
 
@@ -102,54 +128,10 @@ class Game
       end
     end
   end
-
-  def check_grid
-    if    self.check_rows[0]
-      who_won(self.check_rows[1])
-      true
-    elsif self.check_columns[0]
-      who_won(self.check_columns[1])
-      true
-    elsif self.check_vertically[0]
-      who_won(self.check_vertically[1])
-      true
-    else
-      false
-    end
-  end
-
-  private
-
-  def create_grid
-    9.times do |i|
-      @grid[i] = {
-        player: '',
-        marker: i
-      }
-    end
-  end
 end
 
 game = Game.new("Robert", "Junior")
 
-puts game.players
-
-game.add_point(0)
-
-puts game.players
-
-game.reset_points
-
-puts game.players
+game.new_game
 
 game.display_grid
-
-game.set_marker(1, 0)
-game.set_marker(1, 1)
-game.set_marker(1, 2)
-
-game.display_grid
-
-game.check_grid
-
-game.display_points
