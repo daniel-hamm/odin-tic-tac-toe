@@ -20,8 +20,7 @@ class Game
 
   def check_draw
     @grid.each_with_index do |value, index|
-      print "#{index} #{@grid[index][:marker]}"
-      if @grid[index][:marker] != 'X' || @grid[index][:marker] != 'O'
+      if @grid[index][:marker] != 'X' && @grid[index][:marker] != 'O'
         return false
       elsif (@grid[index][:marker] == 'X' || @grid[index][:marker] == 'O') && index == 8
         return true
