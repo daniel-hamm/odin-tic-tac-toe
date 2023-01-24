@@ -184,6 +184,7 @@ while run
       exit
     else
       print "\nRestarting the game!\n"
+      print "\nStarting positions switched.\n"
       game.new_game
     end
   end
