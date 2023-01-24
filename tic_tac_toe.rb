@@ -25,7 +25,10 @@ class Game
   end
 
   def set_marker(players_hash_id, grid_position)
-    if @grid[grid_position][:marker].class != Integer
+    if grid_position < 0 || grid_position > 8
+      print "Grid position not possible!\n\n"
+      false
+    elsif    @grid[grid_position][:marker].class != Integer
       print "Position already occupied by player #{@grid[grid_position][:player]}!\n\n"
       false
     else
@@ -155,8 +158,8 @@ while run
     print game.display_points
     print "\n"
     print "Game finished.\n\n=> Press enter for a new round.\n=> Enter 'exit' to stop the game.\nInput: "
-    decision = gets
-    if decision == "exit"
+    decision = gets.downcase.chomp
+    if decision == 'exit'
       exit
     else
       print "\nRestarting the game!\n"
