@@ -75,6 +75,9 @@ class Game
     elsif self.check_vertically[0]
       who_won(self.check_vertically[1])
       true
+    elsif self.check_draw
+      print "\n#####\nDraw!\n#####\n"
+      true
     else
       false
     end
@@ -182,7 +185,6 @@ while run
   game.display_grid
 
   loop do
-    puts game.check_draw
     print "It's #{game.players[current_player][:name]}s turn.\nEnter the grid number: "
 
     grid_position = gets
