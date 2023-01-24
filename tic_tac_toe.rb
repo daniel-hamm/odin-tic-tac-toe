@@ -140,7 +140,8 @@ end
 run = true
 current_player = 0
 
-print "\nWelcome to Tic Tac Toe!\n\nEnter the first players name: "
+print "\nWelcome to Tic Tac Toe!\n\nFirst name entered starts the game!\n"
+print "\nEnter the first players name: "
 name1 = gets.chomp
 name2 = ''
 
