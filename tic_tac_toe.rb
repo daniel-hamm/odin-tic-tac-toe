@@ -26,11 +26,12 @@ class Game
 
   def set_marker(players_hash_id, grid_position)
     if @grid[grid_position][:marker].class != Integer
-      puts "Position already occupied by player #{@grid[grid_position][:player]}!"
+      print "Position already occupied by player #{@grid[grid_position][:player]}!\n\n"
       false
     else
       @grid[grid_position][:player] = @players[players_hash_id][:name]
       @grid[grid_position][:marker] = @players[players_hash_id][:marker]
+      true
     end
   end
 
@@ -38,6 +39,7 @@ class Game
     @players.keys.count.times do |n|
       print "#{@players[n][:name]} has #{@players[n][:value]} points.\n"
     end
+    return
   end
 
   def check_grid
@@ -130,8 +132,37 @@ class Game
   end
 end
 
-game = Game.new("Robert", "Junior")
+run = true
+current_player = 0
 
-game.new_game
+game = Game.new('Robert', 'Junior')
 
-game.display_grid
+while run
+  game.display_grid
+
+  loop do
+    print "It's #{game.players[current_player][:name]}s turn.\nEnter the grid number: "
+
+    grid_position = gets
+
+    print "\n"
+
+    break if game.set_marker(current_player, grid_position.to_i)
+  end
+
+  if game.check_grid
+    print "\n"
+    print game.display_points
+    print "\n"
+    print "Game finished.\n\n=> Press enter for a new round.\n=> Enter 'exit' to stop the game.\nInput: "
+    decision = gets
+    if decision == "exit"
+      exit
+    else
+      print "\nRestarting the game!\n"
+      game.new_game
+    end
+  end
+
+  current_player == 0 ? current_player = 1 : current_player = 0
+end
