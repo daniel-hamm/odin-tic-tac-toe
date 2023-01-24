@@ -142,8 +142,15 @@ current_player = 0
 
 print "\nWelcome to Tic Tac Toe!\n\nEnter the first players name: "
 name1 = gets.chomp
-print "\nEnter the second players name: "
-name2 = gets.chomp
+name2 = ''
+
+loop do
+  print "\nEnter the second players name: "
+  name2 = gets.chomp
+  break if name1 != name2
+
+  print "\nDon't use the same names for a better visual experience!\nEnter new name!\n"
+end
 print "\nStarting the game!\n"
 
 game = Game.new(name1, name2)
