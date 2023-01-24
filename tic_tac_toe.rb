@@ -1,16 +1,37 @@
+# Tic Tac Toe game
 # frozen_string_literal: true
 
 # Main game class
 class Game
+  # Allow the players the variable to be read outside of the class
   attr_reader :players
 
+  # initialize method called when creating the class
   def initialize(name0, name1)
+    # create the players hash with the name, the points / value and the markers
     @players = { 0 => { name: name0, value: 0, marker: 'X' }, 1 => { name: name1, value: 0, marker: 'O' } }
+
+    # create the empty grid hash
     @grid = {}
+
+    # call the new game method
     self.new_game
   end
 
+  def check_draw
+    @grid.each_with_index do |value, index|
+      print "#{index} #{@grid[index][:marker]}"
+      if @grid[index][:marker] != 'X' || @grid[index][:marker] != 'O'
+        return false
+      elsif (@grid[index][:marker] == 'X' || @grid[index][:marker] == 'O') && index == 8
+        return true
+      end
+    end
+  end
+
+  # new game method
   def new_game
+    # call the create grid method to create and reset the grid
     self.create_grid
   end
 
@@ -125,6 +146,8 @@ class Game
     [false]
   end
 
+  
+
   def who_won(string)
     @players.keys.count.times do |n|
       if @players[n][:marker] == string
@@ -160,6 +183,7 @@ while run
   game.display_grid
 
   loop do
+    puts game.check_draw
     print "It's #{game.players[current_player][:name]}s turn.\nEnter the grid number: "
 
     grid_position = gets
