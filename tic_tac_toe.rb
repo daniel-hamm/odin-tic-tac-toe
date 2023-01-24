@@ -25,7 +25,7 @@ class Game
   end
 
   def set_marker(players_hash_id, grid_position)
-    if grid_position < 0 || grid_position > 8
+    if   grid_position < 0 || grid_position > 8
       print "Grid position not possible!\n\n"
       false
     elsif    @grid[grid_position][:marker].class != Integer
@@ -165,7 +165,11 @@ while run
 
     print "\n"
 
-    break if game.set_marker(current_player, grid_position.to_i)
+    if grid_position !~ /\A\d+\Z/
+      print "\nEnter a number\n\n"
+    elsif game.set_marker(current_player, grid_position.to_i)
+      break
+    end
   end
 
   if game.check_grid
